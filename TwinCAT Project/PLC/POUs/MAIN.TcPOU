@@ -1,13 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="MAIN" Id="{eb436a36-c8e2-4fab-9b6a-b8a59b9af6d9}">
+  <POU Name="MAIN" Id="{eb436a36-c8e2-4fab-9b6a-b8a59b9af6d9}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	bOnlyRunOnce : BOOL;
 END_VAR
-]]>
-    </Declaration>
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[IF NOT bOnlyRunOnce THEN
+	Tc2_System.ADSLOGSTR(msgCtrlMask := Tc2_System.Global_Variables.ADSLOG_MSGTYPE_ERROR OR Tc2_System.Global_Variables.ADSLOG_MSGTYPE_LOG,
+						msgFmtStr := 'Hello World!',
+						strArg := '');
+	bOnlyRunOnce := TRUE;
+END_IF
+
+POU();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

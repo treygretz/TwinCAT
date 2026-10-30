@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="POU" Id="{80087357-1119-4c5b-b325-82337c9a2f5c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM POU
+VAR
+	fOneFloat : REAL;
+	sThisIsAString : STRING;
+	nAnInteger : INT;
+	
+	nReturnedNumberOfBytesForFloat : UDINT;
+	nReturnedNumberOfBytesForString : UDINT;
+	nReturnedNumberOfBytesForInteger : UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nReturnedNumberOfBytesForFloat := SIZEOF(fOneFloat);
+nReturnedNumberOfBytesForString := SIZEOF(sThisIsAString);
+nReturnedNumberOfBytesForInteger := SIZEOF(nAnInteger);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
