@@ -3,18 +3,17 @@
   <POU Name="MAIN" Id="{eb436a36-c8e2-4fab-9b6a-b8a59b9af6d9}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	bOnlyRunOnce : BOOL;
+    fbEnc : FB_SimEncoder;
+    bGo   : BOOL;  // Wire to a HMI button or PLC tag
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF NOT bOnlyRunOnce THEN
-	Tc2_System.ADSLOGSTR(msgCtrlMask := Tc2_System.Global_Variables.ADSLOG_MSGTYPE_ERROR OR Tc2_System.Global_Variables.ADSLOG_MSGTYPE_LOG,
-						msgFmtStr := 'Hello World!',
-						strArg := '');
-	bOnlyRunOnce := TRUE;
-END_IF
-
-POU();]]></ST>
+      <ST><![CDATA[fbEnc(
+    bActivate := bGo,
+    rSpeed    := 1000.0,   // 1000 counts/s
+    bDirection:= TRUE,
+    nResolution := 4096    // e.g. 4096 PPR encoder
+);]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

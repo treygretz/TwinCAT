@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SimEncoder" Id="{96f94ccf-c6d6-4df4-b6e4-1de54d4df576}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimEncoder
+VAR_INPUT
+    bActivate   : BOOL;       // Set TRUE to start counting
+    rSpeed      : LREAL := 0; // Encoder counts per second
+    bDirection  : BOOL := TRUE; // TRUE = +, FALSE = -
+    nResolution : UDINT := 4096; // Encoder PPR (for rollover)
+END_VAR
+
+VAR_OUTPUT
+    nCount      : UDINT;      // Simulated encoder count (wraps at resolution)
+    rPosition   : LREAL;      // Unwrapped position (in counts, signed)
+    bRunning    : BOOL;       // TRUE while counting
+END_VAR
+
+VAR
+    rDelta      : LREAL;      // Counts added this cycle
+    rAccum      : LREAL := 0; // Accumulated (unwrapped) position
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bActivate THEN
+    bRunning := TRUE;
+
+    // Calculate delta for this cycle (counts/s × cycle time)
+	rDelta := rSpeed * (UDINT_TO_LREAL(_TaskInfo[GETCURTASKINDEXEX()].CycleTime) / 10_000_000.0);
+
+
+    IF bDirection THEN
+        rAccum := rAccum + rDelta;
+    ELSE
+        rAccum := rAccum - rDelta;
+    END_IF
+
+    // Wrap the UDINT count at the encoder resolution
+	nCount := LREAL_TO_UDINT(rAccum) MOD nResolution;   
+
+    // Unwrapped signed position
+    rPosition := rAccum;
+
+ELSE
+    bRunning := FALSE;
+    // Hold last values (no reset) — uncomment to reset:
+    // nCount  := 0;
+    // rPosition := 0;
+    // rAccum  := 0;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
