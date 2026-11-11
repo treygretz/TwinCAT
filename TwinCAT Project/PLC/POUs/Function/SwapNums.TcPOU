@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="SwapNums" Id="{6f283f2a-6f48-4562-8b5f-156bbaaa47df}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION SwapNums : INT
+VAR_IN_OUT
+	nNumber1 : INT;
+	nNumber2 : INT;
+END_VAR
+VAR
+	nNumberTemp : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nNumberTemp := nNumber1;
+nNumber1 := nNumber2;
+nNumber2 := nNumberTemp;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

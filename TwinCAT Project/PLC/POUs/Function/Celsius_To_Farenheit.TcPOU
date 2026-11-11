@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Celsius_To_Farenheit" Id="{7920b028-4bc7-41f6-b576-dff1b341345d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Celsius_To_Farenheit : REAL
+VAR_INPUT
+	fCelsius : REAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Celsius_To_Farenheit := fCelsius * 1.8 + 32;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

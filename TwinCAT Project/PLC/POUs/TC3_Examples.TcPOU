@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="TC3_Examples" Id="{79d2776d-afee-479b-9286-cbec8c87fd10}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM TC3_Examples
+VAR
+	bOnlyRunOnce : BOOL;
+	
+	// Variables used to show how functions can operate
+	fFarenheit : REAL;
+	
+	nReturnGreater : INT;
+	nReturnSmaller : INT;
+	
+	nNumA : INT;
+	nNumB : INT;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT bOnlyRunOnce THEN
+	Tc2_System.ADSLOGSTR(msgCtrlMask := Tc2_System.Global_Variables.ADSLOG_MSGTYPE_ERROR OR Tc2_System.Global_Variables.ADSLOG_MSGTYPE_LOG,
+						msgFmtStr := 'Hello World!',
+						strArg := '');
+	bOnlyRunOnce := TRUE;
+END_IF
+
+fFarenheit := Celsius_To_Farenheit(fCelsius := 5.0);
+
+Greater_Smaller(nNumber1 := 2, nNumber2 := 9, nGreater => nReturnGreater, nSmaller => nReturnSmaller);
+
+SwapNums(nNumA, nNumB);
+
+POU();]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

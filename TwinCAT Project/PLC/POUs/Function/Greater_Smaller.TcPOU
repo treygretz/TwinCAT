@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="Greater_Smaller" Id="{17e6cd5b-2514-4bb8-9317-78b9ed697c2c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Greater_Smaller : INT
+VAR_INPUT
+	nNumber1 : INT;
+	nNumber2 : INT;
+END_VAR
+VAR_OUTPUT
+	nGreater : INT;
+	nSmaller : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF nNumber1 > nNumber2 THEN
+	nGreater := nNumber1;
+	nSmaller := nNumber2;
+ELSE
+	nGreater := nNumber2;
+	nSmaller := nNumber1;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
